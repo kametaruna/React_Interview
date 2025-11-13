@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/React_Interview/static/css/main.eae602fd.css",
+    "main.js": "/React_Interview/static/js/main.8a7f45ed.js",
+    "static/js/453.3183b932.chunk.js": "/React_Interview/static/js/453.3183b932.chunk.js",
+    "index.html": "/React_Interview/index.html",
+    "main.eae602fd.css.map": "/React_Interview/static/css/main.eae602fd.css.map",
+    "main.8a7f45ed.js.map": "/React_Interview/static/js/main.8a7f45ed.js.map",
+    "453.3183b932.chunk.js.map": "/React_Interview/static/js/453.3183b932.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eae602fd.css",
+    "static/js/main.8a7f45ed.js"
+  ]
+}
