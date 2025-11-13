@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
-import  questions from "./questions"; // 外部質問ファイル
+import questions from "./questions";
 
 function App() {
   const [image, setImage] = useState(null);
@@ -8,6 +8,7 @@ function App() {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [showForDownload, setShowForDownload] = useState(false);
+  const [showGuide, setShowGuide] = useState(false); // 👈 折りたたみ制御
 
   const captureRef = useRef(null);
 
@@ -19,7 +20,7 @@ function App() {
     setAnswers({});
   };
 
-  // 厳選6問（最初の50問から抽出）
+  // 厳選6問（上位50）
   const getSelectedFromTop50 = () => {
     const top50 = questions.slice(0, 50);
     const shuffled = [...top50].sort(() => 0.5 - Math.random());
@@ -38,7 +39,7 @@ function App() {
     }
   };
 
-  // PNG保存処理（改行保持）
+  // PNG保存（改行保持）
   const handleDownload = async () => {
     if (!captureRef.current) return;
 
@@ -64,11 +65,37 @@ function App() {
   const rightQuestions = selectedQuestions.slice(2);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 p-6 space-y-6">
       <div className="w-full max-w-5xl">
-        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
+        <h1 className="text-3xl font-bold text-center text-blue-600 mb-4">
           キャラインタビュー
         </h1>
+
+        {/* 折りたたみ式 使い方と注意点 */}
+        <div className="bg-white p-4 rounded-2xl shadow-md mb-6 border border-gray-200">
+          <button
+            onClick={() => setShowGuide((prev) => !prev)}
+            className="w-full flex justify-between items-center text-left text-blue-600 font-semibold text-lg focus:outline-none"
+          >
+            <span>📘 使い方と注意点</span>
+            <span>{showGuide ? "▲" : "▼"}</span>
+          </button>
+
+          {showGuide && (
+            <div className="mt-3 border-t border-gray-200 pt-3">
+              <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                <li>画像をアップロードしてキャラ名を入力します。</li>
+                <li>「ランダム6問」または「厳選6問」ボタンで質問を表示します。</li>
+                <li>質問横の🔒ボタンを押すとその質問が固定されます。</li>
+                <li>ロックされていない質問だけが再抽選で入れ替わります。</li>
+                <li>回答欄に自由に記入できます。</li>
+                <li>「PNG出力」ボタンで現在の画面を画像として保存できます。</li>
+                <li>外部画像を使用する場合は権利にご注意ください。</li>
+                <li>スマホでは縦スクロールが必要になる場合があります。</li>
+              </ul>
+            </div>
+          )}
+        </div>
 
         {/* 操作パネル */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
